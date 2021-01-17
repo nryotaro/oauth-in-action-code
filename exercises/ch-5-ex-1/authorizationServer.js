@@ -26,41 +26,45 @@ var authServer = {
 
 // client information
 var clients = [
-
-  /*
-   * Enter client information here
-   */
+	/*
+	 * Enter client information here
+	 */
+	{
+		"client_id": "oauth-client-1",
+		"client_secret": "oauth-client-secret-1",
+		"redirect_uris": ["http://localhost:9000/callback"]
+	}
 ];
 
 var codes = {};
 
 var requests = {};
 
-var getClient = function(clientId) {
-	return __.find(clients, function(client) { return client.client_id == clientId; });
+var getClient = function (clientId) {
+	return __.find(clients, function (client) { return client.client_id == clientId; });
 };
 
-app.get('/', function(req, res) {
-	res.render('index', {clients: clients, authServer: authServer});
+app.get('/', function (req, res) {
+	res.render('index', { clients: clients, authServer: authServer });
 });
 
-app.get("/authorize", function(req, res){
-	
+app.get("/authorize", function (req, res) {
+
 	/*
 	 * Process the request, validate the client, and send the user to the approval page
 	 */
-	
+
 });
 
-app.post('/approve', function(req, res) {
+app.post('/approve', function (req, res) {
 
 	/*
 	 * Process the results of the approval page, authorize the client
 	 */
-	
+
 });
 
-app.post("/token", function(req, res){
+app.post("/token", function (req, res) {
 
 	/*
 	 * Process the request, issue an access token
@@ -68,26 +72,26 @@ app.post("/token", function(req, res){
 
 });
 
-var buildUrl = function(base, options, hash) {
+var buildUrl = function (base, options, hash) {
 	var newUrl = url.parse(base, true);
 	delete newUrl.search;
 	if (!newUrl.query) {
 		newUrl.query = {};
 	}
-	__.each(options, function(value, key, list) {
+	__.each(options, function (value, key, list) {
 		newUrl.query[key] = value;
 	});
 	if (hash) {
 		newUrl.hash = hash;
 	}
-	
+
 	return url.format(newUrl);
 };
 
-var decodeClientCredentials = function(auth) {
+var decodeClientCredentials = function (auth) {
 	var clientCredentials = Buffer.from(auth.slice('basic '.length), 'base64').toString().split(':');
 	var clientId = querystring.unescape(clientCredentials[0]);
-	var clientSecret = querystring.unescape(clientCredentials[1]);	
+	var clientSecret = querystring.unescape(clientCredentials[1]);
 	return { id: clientId, secret: clientSecret };
 };
 
@@ -97,9 +101,9 @@ app.use('/', express.static('files/authorizationServer'));
 nosql.clear();
 
 var server = app.listen(9001, 'localhost', function () {
-  var host = server.address().address;
-  var port = server.address().port;
+	var host = server.address().address;
+	var port = server.address().port;
 
-  console.log('OAuth Authorization Server is listening at http://%s:%s', host, port);
+	console.log('OAuth Authorization Server is listening at http://%s:%s', host, port);
 });
- 
+
