@@ -247,7 +247,7 @@ app.post("/token", function (req, res) {
 		var token_response = {
 			access_token: access_token,
 			token_type: 'Bearer',
-			scope: rscope.jon(' '),
+			scope: rscope.join(' '),
 		};
 		nosql.insert({ access_token: access_token, client_id: client.clientId, scope: rscope });
 		res.status(200).json(token_response);
