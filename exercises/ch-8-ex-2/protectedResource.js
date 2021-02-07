@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var randomstring = require("randomstring");
 var cons = require('consolidate');
 var nosql = require('nosql').load('database.nosql');
+var cors = require('cors');
 var qs = require("qs");
 var querystring = require('querystring');
 var request = require("sync-request");
@@ -83,8 +84,8 @@ var requireAccessToken = function(req, res, next) {
 		res.status(401).end();
 	}
 }; 
-
-app.get("/helloWorld", getAccessToken, function(req, res){
+app.options('/helloWorld', cors());
+app.get("/helloWorld", cors(), getAccessToken, function(req, res){
 	if (req.access_token) {
 		
 		res.setHeader('X-Content-Type-Options','nosniff');
