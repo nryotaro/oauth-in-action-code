@@ -62,6 +62,8 @@ var getAccessToken = function(req, res, next) {
 	/*
 	 * Validate the signature of the JWT
 	 */
+	var publicKey = jose.KEYUTIL.getKey(rsaKey);
+)
 	
 	if (payload.iss == 'http://localhost:9001/') {
 		console.log('issuer OK');
